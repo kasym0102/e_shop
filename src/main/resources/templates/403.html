@@ -1,0 +1,30 @@
+<html xmlns:th = "http://www.thymeleaf.org" xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator ="layout/main.html">
+
+<div layout:fragment="site_content">
+
+
+    <div class="row mt-4">
+        <ul class="col sm-12">
+            <form th:action="@{'/search'}" class="form-group">
+                <div class="row">
+                    <div class="col-10">
+                        <input type="text" class="form-control" placeholder="Search..." name="search_value" required>
+                        <input type="hidden" id="isAsc" class="form-control" name="isAsc" th:value="'true'">
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-success" style="color: rgba(11,129,3,0.89); min-width: 100% "><span style="color: white">SEARCH</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </ul>
+    </div>
+
+    <div class="row mt-4">
+        <h3>403 Forbidden</h3>
+    </div>
+</div>
+
+</html>
+
+

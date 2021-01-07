@@ -1,0 +1,113 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://ultraq.net.nz/thymeleaf/layout">
+    <h2 th:text="#{label.listOfBrands}"></h2>
+    <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal" th:text="#{label.addNewBrand}"></button>
+
+    <br><br>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th th:text="#{label.id}"></th>
+                <th th:text="#{label.Name}"></th>
+                <th th:text="#{label.Country}"></th>
+                <th th:text="#{label.action}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="br:${brands}">
+                <td th:text="${br.id}"></td>
+                <td th:text="${br.name}"></td>
+                <td th:text="${br.country.name}"></td>
+                <td>
+                    <a class="btn btn-primary" th:href="'/editBrand?id='+${br.id}"  th:text="#{label.edit}"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{label.addNewBrand}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="mt-3" th:action="@{'/addBrand'}" method="post">
+                        <div class="form-group">
+                            <input type="text" name="name" id="name" class="form-control" value="" th:placeholder="#{label.Name}"
+                                   autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <select name="country_id" class="form-control">
+                                <option th:each="cnt:${countries}" th:value="${cnt.id}" th:text="${cnt.name}"></option>
+                            </select>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{label.close}"></button>
+                            <button type="submit" class="btn btn-success" th:text="#{label.add}"></button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Brand</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="mt-3" th:action="@{'/editBrand'}" method="post">
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" name="update_name" id="update_name" class="form-control" value=""
+                                   placeholder="Name" autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <select name="update_country_id" class="form-control">
+                                <option th:each="cnt:${countries}" th:value="${cnt.id}" th:text="${cnt.name}"></option>
+                            </select>
+                        </div>
+                        <hr class="my-4">
+                        <div class="m-footer">
+                            <div class="row">
+                                <div class="col-8">
+                                    <button type="button" class="btn btn-danger"
+                                            onclick="document.getElementById('delete_form').submit(); return false;">
+                                        DELETE
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">SAVE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <form id="delete_form" th:action="@{'/deleteBrand'}">
+                    <input type="hidden" name="delete_brand_id">
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

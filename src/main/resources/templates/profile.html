@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main.html">
+
+<div layout:fragment="site_content">
+
+
+    <div class="row">
+        <div class="col-6 offset-3">
+
+           <span th:if="${#request.getParameter('error') != null}">
+                <div class="alert alert-danger mt-5" role="alert">
+                <span th:text="#{label.error}"></span>
+                 </div>
+           </span>
+
+            <span th:if="${#request.getParameter('success') != null}">
+                <div class="alert alert-success mt-5" role="alert">
+                <span th:text="#{label.success}"></span>
+                 </div>
+           </span>
+
+            <h1 th:text="#{label.profile}"></h1>
+
+
+            <img th:src="@{'/viewPhoto/' + ${currentUser.pictureURL}}" alt="" class="my-3" style="width: 100%">
+            <form th:action="@{'uploadAvatar'}" method="post" enctype="multipart/form-data">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" name="user_avatar">
+                    <label class="custom-file-label" for="customFile" th:text="#{label.chooseFile}"></label>
+                    <button class="btn btn-success my-2 float-right" type="submit" th:text="#{label.uploadFile}"></button>
+                </div>
+            </form>
+
+            <br>
+            <br>
+
+            <form th:action="@{'/updateProfile'}" method="post">
+                <input type="hidden" name="user_id" th:value="${currentUser.id}">
+                <div class="form-group">
+                    <label th:text="#{label.email}" ></label>
+                    <input type="email" class="form-control"   placeholder="Enter email: " th:value="${currentUser.email}" readonly >
+                </div>
+            <div class="form-group">
+                    <label th:text="#{label.fullName}"></label>
+                    <input type="text" class="form-control"  name="user_fullName" placeholder="Full Name: " th:value="${currentUser.fullName}">
+                </div>
+
+                <button class="btn btn-success float-right" type="submit"><span style="text-transform: uppercase" th:text="#{label.updateProfile}"></span></button>
+            </form>
+
+            <br><br>
+
+            <form th:action="@{'/updatePassword'}" method="post">
+                <input type="hidden" name="user_id" th:value="${currentUser.id}">
+                <div class="form-group">
+                    <label th:text="#{label.oldPassword}" ></label>
+                    <input type="text" class="form-control" th:placeholder="#{label.oldPassword}" name="old_password" >
+                </div>
+                <div class="form-group">
+                    <label th:text="#{label.newPassword}"></label>
+                    <input type="text" class="form-control" th:placeholder="#{label.newPassword}" name="new_password" >
+                </div>
+                <div class="form-group">
+                    <label th:text="#{label.reNewPassword}"></label>
+                    <input type="text" class="form-control" th:placeholder="#{label.reNewPassword}" name="re_new_password" >
+                </div>
+
+                <button class="btn btn-success float-right" type="submit" th:text="#{label.updatePassword}" style="text-transform: uppercase"></button>
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+
+</html>
+
+

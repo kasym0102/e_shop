@@ -1,0 +1,42 @@
+<html xmlns:th = "http://www.thymeleaf.org" xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorator ="layout/mainAdmin.html">
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" layout:fragment="admin_content">
+
+    <br><br>
+
+    <form class="mt-3" th:action="@{'/editCategory'}" method="post">
+        <input type="hidden" name="category_id" th:value="${category.id}">
+        <div class="form-group">
+            <input type="text" name="name" id="name" class="form-control" th:value="${category.name}" placeholder="Name"
+                   autocomplete="name">
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="logoURL" id="logoURL" class="form-control" th:value="${category.logoURL}" placeholder="logoURL..."
+                   autocomplete="logoURL">
+        </div>
+
+
+        <hr class="my-4">
+        <div class="">
+            <div class="row">
+                <div class="col-8">
+                    <button type="button" class="btn btn-danger" onclick="document.getElementById('delete_form').submit(); return false;">
+                        DELETE
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">SAVE</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form id="delete_form" th:action="@{'/deleteCategory'}">
+        <input type="hidden" name="delete_country_id" >
+    </form>
+
+</main>
+
+
+</html>

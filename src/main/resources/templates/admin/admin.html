@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/mainAdmin.html">
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" layout:fragment="admin_content">
+
+    <br><br>
+    <span th:if="${entity_name == 'purchases'}">
+                <div class="" th:insert="~{admin/purchases}" th:if="${rolesCount == 3}">
+                </div>
+    </span>
+
+
+    <span th:if="${entity_name == 'countries'}">
+                <div class="" th:insert="~{admin/countries}" th:if="${rolesCount == 3}">
+                </div>
+    </span>
+
+    <span th:if="${entity_name == 'brands'} ">
+            <div class="" th:insert="~{admin/brands}" th:if="${rolesCount == 3}">
+            </div>
+    </span>
+
+    <span th:if="${entity_name == 'items'}">
+            <div class="" th:insert="~{admin/items} " th:if="${rolesCount >= 2}">
+            </div>
+        </span>
+
+    <span th:if="${entity_name == 'categories'}">
+            <div class="" th:insert="~{admin/categories}" th:if="${rolesCount == 3}">
+            </div>
+        </span>
+
+    <span th:if="${entity_name == 'users'}">
+            <div class="" th:insert="~{admin/users}" th:if="${rolesCount == 3}">
+            </div>
+        </span>
+
+    <span th:if="${entity_name == 'moderators'}">
+            <div class="" th:insert="~{admin/moderators}" th:if="${rolesCount == 3}">
+            </div>
+        </span>
+
+    <span th:if="${entity_name == 'roles'}">
+                <div class="" th:insert="~{admin/roles}" th:if="${currentUser.getRoles().size() == 3}">
+                </div>
+            </span>
+
+</main>
+
+
+</html>

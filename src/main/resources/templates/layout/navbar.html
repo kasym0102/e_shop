@@ -1,0 +1,43 @@
+<div class="navbar row" style="background-color: rgba(11,129,3,0.89)" xmlns:th = "http://www.thymeleaf.org"
+     xmlns:sec = "http://www.thymeleaf.org/extras/spring-security">
+
+    <div class="col m-1">
+        <a class="navbar-brand ml-5" href="/" style="font-family:'Agency FB'; color: white">
+            <img src="http://cdn.onlinewebfonts.com/svg/download_43910.png" width="30" height="30" alt="" loading="lazy">
+            <span th:text="#{label.siteName}"></span>
+        </a>
+    </div>
+
+
+    <div class="col m-1 mr-5">
+        <a class="nav-link float-right" style="color: white" href="?lng=en">ENG</a>
+        <a class="nav-link float-right" style="color: white" href="?lng=ru">RUS</a>
+        <a class="nav-link float-right" style="color: white"  href="?lng=kz">KAZ</a>
+
+
+        <div class="dropdown float-right">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            th:text="#{label.basket}" >
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/basket" ><span th:text="#{label.basket}"></span></a>
+                <a class="dropdown-item" href="/profile" sec:authorize="isAuthenticated()" ><span th:text="#{label.profile}" ></span></a>
+                <a class="dropdown-item" href="/admin" th:if="${currentUser != null && currentUser.getRoles().size() >=2 }" ><span th:text="#{label.adminPanel}"></span></a>
+
+            </div>
+        </div>
+
+
+        <a class="nav-link float-right " href="/login" style="color: white" th:text="#{label.login}" sec:authorize="isAnonymous()" ></a>
+        <a class="nav-link float-right" href="/registration" style="color: white" th:text="#{label.registration}" sec:authorize="isAnonymous()" ></a>
+        <a class="nav-link float-right mr-3" href="#" onclick="document.getElementById('logoutForm').submit(); return false;" style="color: white" th:text="#{label.logout}" sec:authorize="isAuthenticated()" ></a>
+
+
+
+    </div>
+
+    <form th:action="@{'/logout'}" method="post" id="logoutForm" sec:authorize="isAuthenticated()">
+
+    </form>
+</div>
+

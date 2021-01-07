@@ -1,0 +1,31 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://ultraq.net.nz/thymeleaf/layout">
+    <h2>LIST OF PURCHASES</h2>
+
+    <br><br>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>FULL NAME</th>
+                <th>ITEM NAME</th>
+                <th>ITEM PRICE</th>
+                <th>BUYING DATE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pur:${purchases}">
+                <td th:text="${pur.id}"></td>
+                <td th:text="${pur.fullName}"></td>
+                <td th:text="${pur.shopItem.name}"></td>
+                <td th:text="${pur.shopItem.price}"></td>
+                <td th:text="${pur.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

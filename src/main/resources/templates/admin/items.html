@@ -1,0 +1,159 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://ultraq.net.nz/thymeleaf/layout">
+    <h2 th:text="#{label.listOfItems}"></h2>
+    <button class="btn btn-success" data-toggle="modal" data-target="#addItemModal" th:text="#{label.addNew}"></button>
+
+    <br><br>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th th:text="#{label.Name}"></th>
+                <th th:text="#{label.description}"></th>
+                <th th:text="#{label.price}"></th>
+                <th th:text="#{label.brandOfItem}"></th>
+                <th th:text="#{label.stars}"></th>
+                <th th:text="#{label.action}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item:${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.description}" style="width: 50%"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.brand != null ? item.brand.name : 'None'}"></td>
+                <td th:text="${item.stars}"></td>
+                <td>
+                    <!--                    <button class="btn btn-primary"data-toggle="modal" data-target="#editModal" th:attr="onclick='fillModal('+${cnt.name}+')'"-->
+                    <!--                    >EDIT</button>-->
+                    <a th:href="'/editItem?id='+ ${item.getId()}" class="btn btn-primary" th:text="#{label.edit}"></a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{label.addNew}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form th:action="@{'/addItem'}" method="post">
+                        <div class="form-group">
+                            <label th:text="#{label.Name}"></label>
+                            <input type="text" class="form-control" th:placeholder="#{label.Name}" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.description}"></label>
+                            <textarea name="description" cols="30" rows="10" class="form-control"
+                                      th:placeholder="#{label.description}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.price}"></label>
+                            <input type="text" class="form-control" name="price">
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.basketAmount}"></label>
+                            <input type="number" class="form-control" name="amount">
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.stars}">:</label>
+                            <input type="number" class="form-control" name="stars" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="spic" th:text="#{label.smallPicUrl}"></label>
+                            <input id="lpic" type="text" class="form-control" name="small_picture_url">
+                        </div>
+                        <div class="form-group">
+                            <label for="lpic" th:text="#{label.largePicUrl}"></label>
+                            <input id="spic" type="text" class="form-control" name="large_picture_url">
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.brandOfItem}">:</label>
+                            <select name="brand_id" class="form-control">
+                                <option th:each="brand:${brands}" th:value="${brand.id}"
+                                        th:text="${brand.name}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.inTopPage}"></label>
+                            <select name="inTopPage" class="form-control">
+                                <option value="true" th:text="#{label.yes}"></option>
+                                <option value="false" th:text="#{label.No}"></option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" th:text="#{label.add}"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">Edit Country</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-3" th:action="@{'/editCountry'}" method="post">
+                            <div class="form-group">
+                                <input required type="text" name="name" id="edit_name" class="form-control" value=""
+                                       placeholder="Name..." autocomplete="name">
+                            </div>
+                            <div class="form-group">
+                                <input required type="text" name="code" id="edit_code" class="form-control" value=""
+                                       placeholder="Code...">
+                            </div>
+
+                            <hr class="my-4">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <button type="button" class="btn btn-danger"
+                                                onclick="document.getElementById('delete_form').submit(); return false;">
+                                            DELETE
+                                        </button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" class="btn btn-success">SAVE</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form id="delete_form" th:action="@{'/deleteCountry'}">
+                            <input type="hidden" name="delete_country_id">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        const fillModal = (name) => {
+
+            document.getElementById("edit_name").value = name;
+
+        }
+    </script>
+</div>
